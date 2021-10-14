@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SnakeTriggerBehaviour
 {
+    #region Custom methods
     public void WhenEatingCrystal()
     {
 
@@ -14,4 +15,5 @@ public class SnakeTriggerBehaviour
     {
 
     }
+    #endregion
 }

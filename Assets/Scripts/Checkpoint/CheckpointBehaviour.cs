@@ -10,20 +10,32 @@ public sealed class CheckpointBehaviour : MonoBehaviour
     [SerializeField] private Color checkpointColor = Color.white;
 
     private ParticleSystem.MainModule mainModuleParticleSystem;
+
+    public Color CheckpointColor
+    {
+        get
+        {
+            return checkpointColor;
+        }
+        set
+        {
+            checkpointColor = value;
+
+            mainModuleParticleSystem.startColor = checkpointColor;
+            mesh.material.color = checkpointColor;
+        }
+    }
     #endregion
 
     #region MonoBehaviour API
     private void Start()
     {
         mainModuleParticleSystem = particles.main;
-        mainModuleParticleSystem.startColor = checkpointColor;
-
-        mesh.material.color = checkpointColor;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(tagProvider.PlayerTag) && other.gameObject.TryGetComponent(out MeshRenderer meshRenderer))
+        if (other.CompareTag(tagProvider.PlayerTag) && other.gameObject.TryGetComponent(out MeshRenderer meshRenderer))
         {
             meshRenderer.material.color = checkpointColor;
         }

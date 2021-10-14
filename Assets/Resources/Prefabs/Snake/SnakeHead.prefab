@@ -184,55 +184,55 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0
-    - position: {x: 9.333333, y: 0, z: 0}
+    - position: {x: 11.555555, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.1111111111111111
-    - position: {x: 18.666666, y: 0, z: 0}
+    - position: {x: 23.11111, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.2222222222222222
-    - position: {x: 28, y: 0, z: 0}
+    - position: {x: 34.666668, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.3333333333333333
-    - position: {x: 37.333332, y: 0, z: 0}
+    - position: {x: 46.22222, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.4444444444444444
-    - position: {x: 46.666668, y: 0, z: 0}
+    - position: {x: 57.77778, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.5555555555555556
-    - position: {x: 56, y: 0, z: 0}
+    - position: {x: 69.333336, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.6666666666666666
-    - position: {x: 65.333336, y: 0, z: 0}
+    - position: {x: 80.88889, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.7777777777777778
-    - position: {x: 74.666664, y: 0, z: 0}
+    - position: {x: 92.44444, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.8888888888888888
-    - position: {x: 84, y: 0, z: 0}
+    - position: {x: 104, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
       forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
@@ -251,7 +251,7 @@ MonoBehaviour:
     size: 1
     percent: 0
   clipToSample:
-    position: {x: 84, y: 0, z: 0}
+    position: {x: 104, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
     forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
@@ -319,7 +319,7 @@ MonoBehaviour:
   autoStartPosition: 0
   _follow: 1
   preserveUniformSpeedWithOffset: 0
-  _followSpeed: 1
+  _followSpeed: 2.6
   _followDuration: 1
   _startPosition: 0
   _speedModifier:

@@ -16,7 +16,7 @@ sealed class BodyMovement
     private readonly SplineFollower follower = null;
 
     private const int minPositionInHistory = 0, firstPositionInHistory = 0, leftMouseButton = 0, firstTouch = 0;
-    private const float middleOfViewport = 0.5f, moveToLeft = -1.0f, moveToRight = 1.0f;
+    private const float moveToLeft = -1.0f, moveToRight = 1.0f;
 
     private float inputValue;
     #endregion
