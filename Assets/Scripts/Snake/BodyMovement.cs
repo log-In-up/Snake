@@ -2,41 +2,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
 
-public sealed class BodyMovement
+sealed class BodyMovement
 {
-    private readonly float lateralSpeed;
+    #region Parameters
+    private readonly float lateralSpeed, raycastMaxDistance;
     private readonly int gapBetweenBody;
     private readonly Transform head = null;
-    private readonly GameObject tail = null;
+    private readonly LayerMask ground;
 
     private readonly List<GameObject> bodyParts = null;
     private readonly List<Vector3> positionsHistory = null;
 
     private readonly SplineFollower follower = null;
-    private readonly JoystickController controller = null;
 
-    private const int minPositionInHistory = 0, firstPositionInHistory = 0;
+    private const int minPositionInHistory = 0, firstPositionInHistory = 0, leftMouseButton = 0, firstTouch = 0;
+    private const float middleOfViewport = 0.5f, moveToLeft = -1.0f, moveToRight = 1.0f;
 
-    public BodyMovement(GameObject tail, Transform head, SplineFollower follower, JoystickController controller, float lateralSpeed, int gapBetweenBody)
+    private float inputValue;
+    #endregion
+
+    public BodyMovement(Transform head, SplineFollower follower, float lateralSpeed, float raycastMaxDistance, int gapBetweenBody, LayerMask ground)
     {
         bodyParts = new List<GameObject>();
         positionsHistory = new List<Vector3>();
 
         this.head = head;
-        this.tail = tail;
-        this.controller = controller;
         this.lateralSpeed = lateralSpeed;
+        this.raycastMaxDistance = raycastMaxDistance;
         this.follower = follower;
         this.gapBetweenBody = gapBetweenBody;
+        this.ground = ground;
     }
 
+    #region Custom methods
     public void MakeMove()
     {
         HeadMovement();
         TailMovement();
     }
 
-    public void GrowSnake()
+    public void GrowSnake(GameObject tail)
     {
         GameObject newBody = Object.Instantiate(tail);
         bodyParts.Add(newBody);
@@ -44,11 +49,44 @@ public sealed class BodyMovement
 
     private void HeadMovement()
     {
-        float blendValue = follower.offsetModifier.blend + (controller.Horizontal() * Time.deltaTime * lateralSpeed);
+        inputValue = 0;
 
-        follower.offsetModifier.blend = Mathf.Clamp(blendValue, 0.0f, 1.0f);
+        if (Input.touchCount > 0)
+        {
+            TouchInput();
+        }
+        else if (Input.GetMouseButton(leftMouseButton))
+        {
+            MouseInput();
+        }
+
+        float blendValue = follower.offsetModifier.blend + inputValue;
+
+        follower.offsetModifier.blend = Mathf.Clamp01(blendValue);
 
         positionsHistory.Insert(firstPositionInHistory, head.position);
+    }
+
+    private void MouseInput()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        SetInputValue(ray);
+    }
+
+    private void SetInputValue(Ray ray)
+    {
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, raycastMaxDistance, ground.value))
+        {
+            if (head.position.z < hitInfo.point.z)
+            {
+                inputValue = moveToLeft * Time.deltaTime * lateralSpeed;
+            }
+            else if (head.position.z > hitInfo.point.z)
+            {
+                inputValue = moveToRight * Time.deltaTime * lateralSpeed;
+            }
+        }
     }
 
     private void TailMovement()
@@ -69,4 +107,14 @@ public sealed class BodyMovement
             index++;
         }
     }
+
+    private void TouchInput()
+    {
+        Touch touch = Input.GetTouch(firstTouch);
+
+        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+
+        SetInputValue(ray);
+    }
+    #endregion
 }
