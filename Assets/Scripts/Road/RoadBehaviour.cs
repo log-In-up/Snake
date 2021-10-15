@@ -11,6 +11,8 @@ public sealed class RoadBehaviour : MonoBehaviour
     [SerializeField] private Color[] colors = null;
 
     private SplineComputer splineComputer = null;
+    private SpawnCheckpoints checkpoints = null;
+
     #endregion
 
     #region MonoBehaviour API
@@ -21,35 +23,13 @@ public sealed class RoadBehaviour : MonoBehaviour
 
     private void Start()
     {
-        SpawnPoints();
+        checkpoints = new SpawnCheckpoints(splineComputer,checkpoint,colors,checkpointsSpawnDelta);
+
+        checkpoints.CrateCheckpoints();
     }
     #endregion
 
     #region Custom methods
-    private void SpawnPoints()
-    {
-        float splineLength = splineComputer.CalculateLength();
-        float fullLengthInPercent = 100, currentDistance = 0;
-        int checkpointColorIndex = 0;
 
-        while (currentDistance <= splineLength)
-        {
-            currentDistance += checkpointsSpawnDelta;
-
-            double percent = ((currentDistance * fullLengthInPercent) / splineLength) / fullLengthInPercent;
-            double savePercent = Mathf.Clamp01((float)percent);
-
-            SplineSample splineSample = splineComputer.Evaluate(savePercent);
-
-            GameObject checkpointGO = Instantiate(checkpoint, splineSample.position, splineSample.rotation);
-            checkpointGO.transform.SetParent(transform);
-
-            if (checkpoint.TryGetComponent(out CheckpointBehaviour checkpointBehaviour))
-            {
-                checkpointColorIndex = ++checkpointColorIndex % colors.Length;
-                checkpointBehaviour.CheckpointColor = colors[checkpointColorIndex];
-            }
-        }
-    }
     #endregion
 }
