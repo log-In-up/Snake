@@ -3,10 +3,12 @@ using UnityEngine;
 
 public sealed class SpawnCheckpoints
 {
+    #region Parameters
     private readonly GameObject checkpoint = null;
     private readonly SplineComputer splineComputer = null;
     private readonly Color[] colors;
     private readonly float checkpointsSpawnDelta = 0.0f;
+    #endregion
 
     public SpawnCheckpoints(SplineComputer splineComputer, GameObject checkpoint, Color[] checkpointColors, float checkpointsSpawnDelta)
     {
@@ -16,6 +18,7 @@ public sealed class SpawnCheckpoints
         this.checkpointsSpawnDelta = checkpointsSpawnDelta;
     }
 
+    #region Custom methods
     public void CrateCheckpoints()
     {
         float splineLength = splineComputer.CalculateLength();
@@ -28,28 +31,38 @@ public sealed class SpawnCheckpoints
 
             if (currentDistance >= splineLength) return;
 
-            double percent = ((currentDistance * fullLengthInPercent) / splineLength) / fullLengthInPercent;
-            double savePercent = Mathf.Clamp01((float)percent);
+            GameObject checkpoint = CreateCheckpoint(currentDistance, fullLengthInPercent, splineLength);
+            checkpoint.transform.SetParent(splineComputer.transform);
 
-            SplineSample splineSample = splineComputer.Evaluate(savePercent);
+            Color color = colors[checkpointColorIndex];
+            checkpointColorIndex = ++checkpointColorIndex % colors.Length;
 
-            GameObject checkpointGO = Object.Instantiate(checkpoint, splineSample.position, splineSample.rotation);
-
-            if (checkpointGO.TryGetComponent(out CheckpointBehaviour checkpointBehaviour))
-            {
-                checkpointColorIndex = ++checkpointColorIndex % colors.Length;
-                Color color = colors[checkpointColorIndex];
-
-                checkpointBehaviour.ChangeCheckpointColor(color);
-
-                if(checkpointGO.TryGetComponent(out ParticleSystem particleSystem))
-                {
-                    ParticleSystem.MainModule main = particleSystem.main;
-                    main.startColor = new ParticleSystem.MinMaxGradient(color);
-                }
-            }
-
-            checkpointGO.transform.SetParent(splineComputer.transform);
+            PaintCheckpoint(checkpoint, color);
         }
     }
+
+    private GameObject CreateCheckpoint(float currentDistance, float fullLengthInPercent, float splineLength)
+    {
+        double percent = ((currentDistance * fullLengthInPercent) / splineLength) / fullLengthInPercent;
+        double savePercent = Mathf.Clamp01((float)percent);
+
+        SplineSample splineSample = splineComputer.Evaluate(savePercent);
+
+        return Object.Instantiate(checkpoint, splineSample.position, splineSample.rotation);
+    }
+
+    private void PaintCheckpoint(GameObject checkpoint, Color color)
+    {
+        if (checkpoint.TryGetComponent(out CheckpointBehaviour checkpointBehaviour))
+        {
+            checkpointBehaviour.ChangeCheckpointColor(color);
+        }
+
+        if (checkpoint.TryGetComponent(out ParticleSystem particleSystem))
+        {
+            ParticleSystem.MainModule main = particleSystem.main;
+            main.startColor = new ParticleSystem.MinMaxGradient(color);
+        }
+    }
+    #endregion
 }
