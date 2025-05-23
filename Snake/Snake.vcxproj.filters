@@ -13,9 +13,45 @@
     <ClCompile Include="Game.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="TimeService.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateMachine.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="TextMenu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Mathematics.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="TimeService.h" />
+    <ClInclude Include="GameStateMachine.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="TextMenu.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="Mathematics.h" />
+    <ClInclude Include="GameplayState.h" />
   </ItemGroup>
 </Project>
