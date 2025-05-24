@@ -57,4 +57,6 @@ namespace Snake
 		void SwitchToNextMenuItem();
 		void SwitchToPreviousMenuItem();
 	};
+
+	void SetChildrenData(MenuItem& item, Orientation orientation, Alignment alignment, float spacing);
 }

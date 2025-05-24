@@ -40,6 +40,9 @@
     <ClCompile Include="GameplayState.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="CloseApplication.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -53,5 +56,6 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="GameplayState.h" />
+    <ClInclude Include="CloseApplication.h" />
   </ItemGroup>
 </Project>

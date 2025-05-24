@@ -36,9 +36,9 @@ namespace Snake
 		*lastTime = clock->getElapsedTime().asSeconds();
 	}
 
-	bool TimeIsPaused()
+	bool& TimeIsPaused()
 	{
-		return gameIsOnPause;
+		return *gameIsOnPause;
 	}
 
 	void SetPause(bool value)

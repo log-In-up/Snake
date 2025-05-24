@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CloseApplication.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameplayState.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="TimeService.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CloseApplication.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameplayState.h" />

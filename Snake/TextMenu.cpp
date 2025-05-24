@@ -185,4 +185,11 @@ namespace Snake
 			SelectMenuItem(*std::prev(it));
 		}
 	}
+
+	void SetChildrenData(MenuItem& item, Orientation orientation, Alignment alignment, float spacing)
+	{
+		item.childrenOrientation = orientation;
+		item.childrenAlignment = alignment;
+		item.childrenSpacing = spacing;
+	}
 }

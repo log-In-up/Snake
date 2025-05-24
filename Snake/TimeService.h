@@ -13,6 +13,6 @@ namespace Snake
 		void Initialization();
 	};
 
-	bool TimeIsPaused();
+	bool& TimeIsPaused();
 	void SetPause(bool value);
 };
