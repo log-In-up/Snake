@@ -43,6 +43,12 @@
     <ClCompile Include="CloseApplication.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -57,5 +63,7 @@
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="GameplayState.h" />
     <ClInclude Include="CloseApplication.h" />
+    <ClInclude Include="Snake.h" />
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace Snake
 
 	void ResourceLoader::LoadFont(std::string resourceURL, sf::Font& font)
 	{
-		if (font.loadFromFile(RESOURCES_PATH + resourceURL))
+		if (font.loadFromFile(FONTS_PATH + resourceURL))
 		{
 		}
 		else
@@ -36,7 +36,7 @@ namespace Snake
 
 	void ResourceLoader::LoadSound(std::string resourceURL, sf::Sound& sound, sf::SoundBuffer& soundBuffer)
 	{
-		if (soundBuffer.loadFromFile(RESOURCES_PATH + resourceURL))
+		if (soundBuffer.loadFromFile(SOUNDS_PATH + resourceURL))
 		{
 			sound.setBuffer(soundBuffer);
 		}
@@ -48,7 +48,7 @@ namespace Snake
 
 	void ResourceLoader::LoadTexture(std::string resourceURL, sf::Texture& texture)
 	{
-		if (texture.loadFromFile(RESOURCES_PATH + resourceURL))
+		if (texture.loadFromFile(TEXTURES_PATH + resourceURL))
 		{
 		}
 		else

@@ -4,45 +4,42 @@
 
 namespace Snake
 {
-	bool* gameIsOnPause;
-	float* lastTime;
-	sf::Clock* clock;
+	bool gameIsOnPause;
+	float lastTime;
+	sf::Clock clock;
 
 	TimeService::TimeService()
 	{
-		gameIsOnPause = new bool(false);
-		lastTime = new float(0.f);
-		clock = new sf::Clock();
+		gameIsOnPause = false;
+		lastTime = 0.f;
+		clock = sf::Clock();
 	}
 
 	TimeService::~TimeService()
 	{
-		delete gameIsOnPause;
-		delete lastTime;
-		delete clock;
 	}
 
 	float TimeService::GetDeltaTime()
 	{
-		float currentTime = clock->getElapsedTime().asSeconds();
-		float deltaTime = gameIsOnPause ? ZERO_DELTA_TIME : currentTime - *lastTime;
-		*lastTime = currentTime;
+		float currentTime = clock.getElapsedTime().asSeconds();
+		float deltaTime = gameIsOnPause ? ZERO_DELTA_TIME : currentTime - lastTime;
+		lastTime = currentTime;
 
 		return deltaTime;
 	}
 
 	void TimeService::Initialization()
 	{
-		*lastTime = clock->getElapsedTime().asSeconds();
+		lastTime = clock.getElapsedTime().asSeconds();
 	}
 
-	bool& TimeIsPaused()
+	bool TimeIsPaused()
 	{
-		return *gameIsOnPause;
+		return gameIsOnPause;
 	}
 
 	void SetPause(bool value)
 	{
-		*gameIsOnPause = value;
+		gameIsOnPause = value;
 	}
 }

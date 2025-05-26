@@ -167,6 +167,8 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Mathematics.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextMenu.cpp" />
     <ClCompile Include="TimeService.cpp" />
@@ -181,6 +183,8 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Mathematics.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="Snake.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextMenu.h" />
     <ClInclude Include="TimeService.h" />

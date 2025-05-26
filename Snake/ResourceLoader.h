@@ -2,27 +2,31 @@
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <string>
 
 namespace Snake
 {
 	const std::string RESOURCES_PATH = "Resources/";
+	const std::string TEXTURES_PATH = RESOURCES_PATH + "Textures/";
+	const std::string FONTS_PATH = RESOURCES_PATH + "Fonts/";
+	const std::string SOUNDS_PATH = RESOURCES_PATH + "Sounds/";
 
-	const std::string APPLE = "Textures\\Apple.png",
-		ROCK = "Textures\\Rock.png",
-		SNAKE_BODY = "Textures\\Body.png",
-		SNAKE_BODY_BEND = "Textures\\BodyBend.png",
-		SNAKE_HEAD = "Textures\\Head.png",
-		SNAKE_TAIL = "Textures\\Tail.png";
+	const std::string APPLE = "Apple.png",
+		ROCK = "Rock.png",
+		SNAKE_BODY = "Body.png",
+		SNAKE_BODY_BEND = "BodyBend.png",
+		SNAKE_HEAD = "Head.png",
+		SNAKE_TAIL = "Tail.png";
 
-	const std::string FONT = "Fonts\\Roboto-Bold.ttf";
+	const std::string FONT = "Roboto-Bold.ttf";
 
-	const std::string APPLE_EAT = "Sounds\\Apple_Eat.wav",
-		BACKGROUND_MUSIC = "Sounds\\Clint_Hammer_Background_Music.wav",
-		DEATH = "Sounds\\Death.wav",
-		LOSE = "Sounds\\Maodin204_Lose.wav",
-		MENU = "Sounds\\The_Evil_Socks_Menu_Hover.wav",
-		SNAKE_HIT = "Sounds\\Owlstorm_Snake_Hit.wav";
+	const std::string APPLE_EAT = "Apple_Eat.wav",
+		BACKGROUND_MUSIC = "Clint_Hammer_Background_Music.wav",
+		DEATH = "Death.wav",
+		LOSE = "Maodin204_Lose.wav",
+		MENU = "The_Evil_Socks_Menu_Hover.wav",
+		SNAKE_HIT = "Owlstorm_Snake_Hit.wav";
 
 	struct ResourceData
 	{
