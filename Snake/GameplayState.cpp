@@ -1,6 +1,8 @@
+#include "AppleService.h"
 #include "GameplayState.h"
 #include "GameStateMachine.h"
 #include "MainMenuState.h"
+#include "PointsService.h"
 #include "Snake.h"
 #include "Sprite.h"
 #include "Text.h"
@@ -12,6 +14,8 @@ namespace Snake
 	TextMenu* gameplayTextMenu;
 	SnakeData* snakeData;
 	Snake* snake;
+	AppleService* appleService;
+	PointsService* pointsService;
 
 	float* elapsedTime;
 
@@ -20,6 +24,9 @@ namespace Snake
 		gameplayTextMenu = new TextMenu();
 		snakeData = new SnakeData();
 		snake = new Snake(*snakeData);
+		appleService = new AppleService();
+		pointsService = new PointsService();
+
 		elapsedTime = new float(0.f);
 	}
 
@@ -28,12 +35,18 @@ namespace Snake
 		delete gameplayTextMenu;
 		delete snakeData;
 		delete snake;
+		delete appleService;
+		delete pointsService;
 		delete elapsedTime;
 	}
 
 	void GameplayState::Draw(sf::RenderWindow& window)
 	{
 		DrawSprites(snakeData->body.begin(), snakeData->body.end(), window);
+
+		appleService->Draw(window);
+
+		pointsService->Draw(window);
 
 		if (TimeIsPaused())
 		{
@@ -84,25 +97,40 @@ namespace Snake
 		}
 	}
 
-	void GameplayState::Initialization(ResourceData& resourceData)
+	void GameplayState::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
 		*elapsedTime = 0.f;
 
-		InitializationOfTheSnake(resourceData);
+		InitializationOfTheSnake(resourceData, difficultyService);
 
 		GameplayTextMenuInitialization(resourceData);
 
 		SetPause(false);
+
+		pointsService->Initialization(difficultyService);
+
+		appleService->Initialization(resourceData, difficultyService);
+		appleService->CreateApple();
 	}
 
 	void GameplayState::Update(float deltaTime, sf::RenderWindow& window)
 	{
 		*elapsedTime += deltaTime;
-		if (*elapsedTime < SNAKE_SIZE / snakeData->speed) {
+		if (*elapsedTime < SNAKE_SIZE / snakeData->speed)
+		{
 			return;
 		}
 
 		snake->MoveSnake(deltaTime);
+
+		if (CheckSpriteIntersection(*snake->GetSnakeData().head, appleService->GetAppleData().sprite))
+		{
+			snake->GrowSnake();
+
+			pointsService->AddPoints();
+
+			appleService->CreateApple();
+		}
 
 		*elapsedTime = 0.f;
 	}
@@ -132,13 +160,10 @@ namespace Snake
 		gameplayTextMenu->Initialization(pauseMenu);
 	}
 
-	void GameplayState::InitializationOfTheSnake(ResourceData& resourceData)
+	void GameplayState::InitializationOfTheSnake(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
-		snakeData->textures[(size_t)SnakePart::Head] = resourceData.snakeHead;
-		snakeData->textures[(size_t)SnakePart::Body] = resourceData.snakeBody;
-		snakeData->textures[(size_t)SnakePart::BodyBend] = resourceData.snakeBodyBend;
-		snakeData->textures[(size_t)SnakePart::Tail] = resourceData.snakeTail;
+		snake->LoadSnakeTextures(resourceData);
 
-		snake->Initialization();
+		snake->Initialization(difficultyService.GetCurrentDifficultyData());
 	}
 }

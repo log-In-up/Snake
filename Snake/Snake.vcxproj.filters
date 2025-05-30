@@ -49,6 +49,15 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="GameDifficultyService.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AppleService.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsService.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -65,5 +74,8 @@
     <ClInclude Include="CloseApplication.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="GameDifficultyService.h" />
+    <ClInclude Include="AppleService.h" />
+    <ClInclude Include="PointsService.h" />
   </ItemGroup>
 </Project>

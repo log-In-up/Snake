@@ -19,7 +19,7 @@ namespace Snake
 		window.close();
 	}
 
-	void CloseApplication::Initialization(ResourceData& resourceData)
+	void CloseApplication::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
 	}
 

@@ -20,7 +20,7 @@ namespace Snake
 	{
 		this->currentGameState = newGameState;
 		this->currentGameState->SetGameStateMachine(this);
-		this->currentGameState->Initialization(resourceData);
+		this->currentGameState->Initialization(resourceData, *difficultyService);
 	}
 
 	void GameStateMachine::Update(float deltaTime, sf::RenderWindow& window)

@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "GameDifficultyService.h"
 #include "ResourceLoader.h"
 
 namespace Snake
@@ -19,7 +20,7 @@ namespace Snake
 
 		virtual void Draw(sf::RenderWindow& window) = 0;
 		virtual void HandleWindowEvents(sf::RenderWindow& window, sf::Event& event) = 0;
-		virtual void Initialization(ResourceData& resourceData) = 0;
+		virtual void Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService) = 0;
 		virtual void Update(float deltaTime, sf::RenderWindow& window) = 0;
 		void SetGameStateMachine(GameStateMachine* gameStateMachine);
 	};

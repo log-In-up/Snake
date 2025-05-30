@@ -158,14 +158,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppleService.cpp" />
     <ClCompile Include="CloseApplication.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameDifficultyService.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameplayState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Mathematics.cpp" />
+    <ClCompile Include="PointsService.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -174,14 +177,17 @@
     <ClCompile Include="TimeService.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppleService.h" />
     <ClInclude Include="CloseApplication.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameDifficultyService.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameplayState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Mathematics.h" />
+    <ClInclude Include="PointsService.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="Sprite.h" />

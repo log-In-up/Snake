@@ -124,6 +124,11 @@ namespace Snake
 	{
 	}
 
+	SnakeData& Snake::GetSnakeData()
+	{
+		return snakeData;
+	}
+
 	void Snake::GrowSnake()
 	{
 		auto prevHead = snakeData.head;
@@ -136,7 +141,7 @@ namespace Snake
 		SetBodySprite(snakeData, prevHead);
 	}
 
-	void Snake::Initialization()
+	void Snake::Initialization(DifficultyData& difficultyData)
 	{
 		// Init snake state
 		for (int snakeSegmentIndex = 0; snakeSegmentIndex < INITIAL_SNAKE_SIZE; ++snakeSegmentIndex)
@@ -162,8 +167,16 @@ namespace Snake
 		snakeData.head = --snakeData.body.end();
 		snakeData.tail = snakeData.body.begin();
 
-		snakeData.speed = INITIAL_SPEED;
+		snakeData.speed = difficultyData.snakeMovementSpeed;
 		snakeData.direction = SnakeDirection::Up;
+	}
+
+	void Snake::LoadSnakeTextures(ResourceData& resourceData)
+	{
+		snakeData.textures[(size_t)SnakePart::Head] = resourceData.snakeHead;
+		snakeData.textures[(size_t)SnakePart::Body] = resourceData.snakeBody;
+		snakeData.textures[(size_t)SnakePart::BodyBend] = resourceData.snakeBodyBend;
+		snakeData.textures[(size_t)SnakePart::Tail] = resourceData.snakeTail;
 	}
 
 	void Snake::MoveSnake(float deltaTime)

@@ -1,11 +1,11 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "CloseApplication.h"
+#include "GameDifficultyService.h"
 #include "GameplayState.h"
 #include "GameStateMachine.h"
 #include "MainMenuState.h"
 #include "Text.h"
-#include "TextMenu.h"
 
 namespace Snake
 {
@@ -23,7 +23,11 @@ namespace Snake
 
 	void MainMenuState::Draw(sf::RenderWindow& window)
 	{
-		mainTextMenu->Draw(window, *new sf::Vector2f(0.5f, 0.f), 150.f);
+		sf::Vector2f* origin = new sf::Vector2f(0.5f, 0.f);
+
+		mainTextMenu->Draw(window, *origin, 150.f);
+
+		delete origin;
 	}
 
 	void MainMenuState::HandleWindowEvents(sf::RenderWindow& window, sf::Event& event)
@@ -31,7 +35,7 @@ namespace Snake
 		mainTextMenu->HandleWindowEvents(window, event);
 	}
 
-	void MainMenuState::Initialization(ResourceData& resourceData)
+	void MainMenuState::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
 		MenuItem startGame;
 		SetTextData(startGame.text, "Start the game", resourceData.font, 24);
@@ -40,18 +44,17 @@ namespace Snake
 				gameStateMachine->SwitchCurrentStateTo(new GameplayState());
 			};
 
+		std::vector<MenuItem> difficultiesList = GetAListOfDifficulties(resourceData, difficultyService);
+
 		MenuItem difficultyLevel;
 		SetTextData(difficultyLevel.text, "Difficulty level", resourceData.font, 24);
 		SetTextData(difficultyLevel.hintText, "Difficulty level", resourceData.font, 48, sf::Color::White);
-		difficultyLevel.onPressCallback = [this](MenuItem& item)
-			{
-			};
+		SetChildrenData(difficultyLevel, Orientation::Vertical, Alignment::Middle, 10.f);
+		difficultyLevel.childrens.insert(difficultyLevel.childrens.begin(), difficultiesList.begin(), difficultiesList.end());
 
 		MenuItem tableOfRecords;
 		SetTextData(tableOfRecords.text, "Table of records", resourceData.font, 24);
-		tableOfRecords.onPressCallback = [this](MenuItem& item)
-			{
-			};
+		SetTextData(tableOfRecords.hintText, "Table of records", resourceData.font, 48, sf::Color::White);
 
 		MenuItem sound;
 		SetTextData(sound.text, "Sound [ ]", resourceData.font, 24);
@@ -107,5 +110,28 @@ namespace Snake
 
 	void MainMenuState::Update(float deltaTime, sf::RenderWindow& window)
 	{
+	}
+
+	std::vector<MenuItem> MainMenuState::GetAListOfDifficulties(ResourceData& resourceData, GameDifficultyService& difficultyService)
+	{
+		std::vector<MenuItem>* result = new std::vector<MenuItem>();
+
+		DifficultyData currentDifficulty = difficultyService.GetCurrentDifficultyData();
+
+		for (DifficultyData* difficultyData : difficultyService.GetDifficultyLevels())
+		{
+			std::string value = (currentDifficulty.difficultyName == difficultyData->difficultyName) ? (std::string)"x" : (std::string)" ";
+
+			MenuItem menuItem;
+			SetTextData(menuItem.text, difficultyData->difficultyName, resourceData.font, 24);
+			menuItem.onPressCallback = [difficultyData, result, currentDifficulty, &difficultyService](MenuItem& item)
+				{
+					difficultyService.SetCurrentDifficultyData(difficultyData);
+				};
+
+			result->push_back(menuItem);
+		}
+
+		return *result;
 	}
 }

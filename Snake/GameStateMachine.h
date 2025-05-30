@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "GameDifficultyService.h"
 #include "GameState.h"
 #include "ResourceLoader.h"
 
@@ -12,15 +13,19 @@ namespace Snake
 	private:
 		ResourceData& resourceData;
 		GameState* currentGameState;
+		GameDifficultyService* difficultyService;
 	public:
 		GameStateMachine(GameState* gameStartingState, ResourceData& resourceData) : resourceData(resourceData), currentGameState(nullptr)
 		{
+			difficultyService = new GameDifficultyService();
+
 			this->SwitchCurrentStateTo(gameStartingState);
 		}
 
 		~GameStateMachine()
 		{
 			delete currentGameState;
+			delete difficultyService;
 		}
 
 		void Draw(sf::RenderWindow& window);
