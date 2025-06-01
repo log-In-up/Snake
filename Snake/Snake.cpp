@@ -169,6 +169,8 @@ namespace Snake
 
 		snakeData.speed = difficultyData.snakeMovementSpeed;
 		snakeData.direction = SnakeDirection::Up;
+
+		SetTailSprite(snakeData, snakeData.tail);
 	}
 
 	void Snake::LoadSnakeTextures(ResourceData& resourceData)

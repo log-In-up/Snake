@@ -175,6 +175,8 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextMenu.cpp" />
     <ClCompile Include="TimeService.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WallCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppleService.h" />
@@ -194,6 +196,8 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextMenu.h" />
     <ClInclude Include="TimeService.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WallCreator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

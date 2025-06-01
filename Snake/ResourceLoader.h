@@ -14,6 +14,7 @@ namespace Snake
 
 	const std::string APPLE = "Apple.png",
 		ROCK = "Rock.png",
+		WALL = "Wall.png",
 		SNAKE_BODY = "Body.png",
 		SNAKE_BODY_BEND = "BodyBend.png",
 		SNAKE_HEAD = "Head.png",
@@ -33,6 +34,7 @@ namespace Snake
 		// Textures
 		sf::Texture apple;
 		sf::Texture rock;
+		sf::Texture wall;
 		sf::Texture snakeBody;
 		sf::Texture snakeBodyBend;
 		sf::Texture snakeHead;

@@ -12,6 +12,19 @@ namespace Snake
 		return false;
 	}
 
+	sf::Vector2f GetRandomSpritePositionInRectangle(const sf::Sprite& sprite, const sf::FloatRect& rect)
+	{
+		sf::Vector2f result;
+
+		const auto spriteWidth = sprite.getGlobalBounds().width;
+		const auto spriteHeight = sprite.getGlobalBounds().height;
+
+		result.x = rand() / (float)RAND_MAX * (rect.width - 2 * spriteWidth) + rect.left + spriteWidth;
+		result.y = rand() / (float)RAND_MAX * (rect.height - 2 * spriteHeight) + rect.top + spriteHeight;
+
+		return result;
+	}
+
 	void DrawSprite(const sf::Sprite& sprite, sf::RenderWindow& window)
 	{
 		window.draw(sprite);
@@ -22,6 +35,15 @@ namespace Snake
 		sprite.setTexture(texture);
 		SetSpriteRelativeOrigin(sprite, 0.5f, 0.5f);
 		SetSpriteSize(sprite, desiredWidth, desiredHeight);
+	}
+
+	void SetSpriteRandomPosition(sf::Sprite& sprite, const sf::FloatRect& rect, const std::list<sf::Sprite>& collection)
+	{
+		do
+		{
+			const auto newPosition = GetRandomSpritePositionInRectangle(sprite, rect);
+			sprite.setPosition(newPosition);
+		} while (FullCheckCollisions(collection.begin(), collection.end(), sprite));
 	}
 
 	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY)

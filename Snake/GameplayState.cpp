@@ -8,6 +8,7 @@
 #include "Text.h"
 #include "TextMenu.h"
 #include "TimeService.h"
+#include "WallCreator.h"
 
 namespace Snake
 {
@@ -16,7 +17,9 @@ namespace Snake
 	Snake* snake;
 	AppleService* appleService;
 	PointsService* pointsService;
+	WallCreator* wallCreator;
 
+	bool* isGameOver;
 	float* elapsedTime;
 
 	GameplayState::GameplayState() : GameState()
@@ -26,7 +29,9 @@ namespace Snake
 		snake = new Snake(*snakeData);
 		appleService = new AppleService();
 		pointsService = new PointsService();
+		wallCreator = new WallCreator();
 
+		isGameOver = new bool(false);
 		elapsedTime = new float(0.f);
 	}
 
@@ -37,7 +42,10 @@ namespace Snake
 		delete snake;
 		delete appleService;
 		delete pointsService;
+		delete wallCreator;
+
 		delete elapsedTime;
+		delete isGameOver;
 	}
 
 	void GameplayState::Draw(sf::RenderWindow& window)
@@ -45,8 +53,7 @@ namespace Snake
 		DrawSprites(snakeData->body.begin(), snakeData->body.end(), window);
 
 		appleService->Draw(window);
-
-		pointsService->Draw(window);
+		wallCreator->Draw(window);
 
 		if (TimeIsPaused())
 		{
@@ -56,6 +63,8 @@ namespace Snake
 
 			delete origin;
 		}
+
+		pointsService->Draw(window);
 	}
 
 	void GameplayState::HandleWindowEvents(sf::RenderWindow& window, sf::Event& event)
@@ -99,22 +108,26 @@ namespace Snake
 
 	void GameplayState::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
-		*elapsedTime = 0.f;
+		//*elapsedTime = 0.f;
 
 		InitializationOfTheSnake(resourceData, difficultyService);
-
 		GameplayTextMenuInitialization(resourceData);
 
-		SetPause(false);
-
-		pointsService->Initialization(difficultyService);
-
+		pointsService->Initialization(resourceData, difficultyService);
 		appleService->Initialization(resourceData, difficultyService);
+
+		wallCreator->CreateScreenPerimeterWalls(resourceData);
 		appleService->CreateApple();
+
+		SetPause(false);
 	}
 
 	void GameplayState::Update(float deltaTime, sf::RenderWindow& window)
 	{
+		if (!isGameOver)
+		{
+		}
+
 		*elapsedTime += deltaTime;
 		if (*elapsedTime < SNAKE_SIZE / snakeData->speed)
 		{

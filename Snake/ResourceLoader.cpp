@@ -17,6 +17,7 @@ namespace Snake
 
 		LoadTexture(APPLE, resourceData.apple);
 		LoadTexture(ROCK, resourceData.rock);
+		LoadTexture(WALL, resourceData.wall);
 		LoadTexture(SNAKE_BODY, resourceData.snakeBody);
 		LoadTexture(SNAKE_BODY_BEND, resourceData.snakeBodyBend);
 		LoadTexture(SNAKE_HEAD, resourceData.snakeHead);

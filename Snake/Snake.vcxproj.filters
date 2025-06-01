@@ -58,6 +58,12 @@
     <ClCompile Include="PointsService.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WallCreator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -77,5 +83,7 @@
     <ClInclude Include="GameDifficultyService.h" />
     <ClInclude Include="AppleService.h" />
     <ClInclude Include="PointsService.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WallCreator.h" />
   </ItemGroup>
 </Project>
