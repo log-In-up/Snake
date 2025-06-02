@@ -15,6 +15,7 @@ namespace Snake
 	public:
 		WallCreator();
 		~WallCreator();
+		std::vector<sf::Sprite>& GetWall();
 		void CreateColumn(ResourceData& resourceData, unsigned int height, float width);
 		void CreateRow(ResourceData& resourceData, unsigned int length, float height);
 		void CreateScreenPerimeterWalls(ResourceData& resourceData);

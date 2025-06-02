@@ -1,8 +1,8 @@
 #include <SFML/Graphics/Text.hpp>
-#include<string>
 
 #include "PointsService.h"
 #include "Text.h"
+#include "Utils.h"
 
 namespace Snake
 {
@@ -32,6 +32,16 @@ namespace Snake
 		delete recordsTable;
 	}
 
+	std::map<std::string, int>& PointsService::GetRecordsTable()
+	{
+		return *recordsTable;
+	}
+
+	unsigned int PointsService::GetPoints()
+	{
+		return currentPoints;
+	}
+
 	void PointsService::AddPoints()
 	{
 		currentPoints += pointsPerApple;
@@ -50,5 +60,10 @@ namespace Snake
 		pointsPerApple = difficultyService.GetCurrentDifficultyData().pointsPerEatenApple;
 
 		SetTextData(*displayingTheNumberOfPoints, std::to_string(currentPoints), resourceData.font, 16, sf::Color::White);
+	}
+
+	void PointsService::SortRecords()
+	{
+		SelectionSort(*recordsTable);
 	}
 }

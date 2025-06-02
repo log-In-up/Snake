@@ -1,3 +1,5 @@
+#include <SFML/Graphics/Rect.hpp>
+
 #include "AppleService.h"
 #include "GameMain.h"
 #include "Sprite.h"
@@ -19,12 +21,10 @@ namespace Snake
 		return *apple;
 	}
 
-	void AppleService::CreateApple()
+	void AppleService::CreateApple(const std::list<sf::Sprite>& collection)
 	{
-		apple->position.x = (rand() % SCREEN_WIDTH);
-		apple->position.y = (rand() % SCREEN_HEIGHT);
-
-		apple->sprite.setPosition((float)apple->position.x, (float)apple->position.y);
+		sf::FloatRect rect(0.f, 0.f, (float)(SCREEN_WIDTH - WALL_SIZE * 2), (float)(SCREEN_HEIGHT - WALL_SIZE * 2));
+		SetSpriteRandomPosition(apple->sprite, rect, collection);
 	}
 
 	void AppleService::Draw(sf::RenderWindow& window)

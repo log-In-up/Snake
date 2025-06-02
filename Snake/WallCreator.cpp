@@ -18,13 +18,19 @@ namespace Snake
 		delete wall;
 	}
 
+	std::vector<sf::Sprite>& WallCreator::GetWall()
+	{
+		return *wall;
+	}
+
 	void WallCreator::CreateColumn(ResourceData& resourceData, unsigned int height, float width)
 	{
 		for (unsigned int index = 0; index < height; index++)
 		{
 			sf::Sprite sprite(resourceData.wall);
-			sprite.setPosition({ width ,WALL_SIZE * index });
+			SetSpriteRelativeOrigin(sprite, 0.5f, 0.5f);
 			SetSpriteSize(sprite, WALL_SIZE, WALL_SIZE);
+			sprite.setPosition({ width ,WALL_SIZE * index });
 
 			wall->push_back(sprite);
 		}
@@ -51,8 +57,8 @@ namespace Snake
 
 		unsigned int height = (unsigned int)ceil(SCREEN_HEIGHT / WALL_SIZE);
 
-		CreateColumn(resourceData, height, 0.f);
-		CreateColumn(resourceData, height, SCREEN_WIDTH - WALL_SIZE);
+		CreateColumn(resourceData, height, WALL_SIZE / 2);
+		CreateColumn(resourceData, height, SCREEN_WIDTH - WALL_SIZE / 2);
 	}
 
 	void WallCreator::Draw(sf::RenderWindow& window)

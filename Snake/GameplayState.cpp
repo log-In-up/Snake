@@ -3,6 +3,7 @@
 #include "GameStateMachine.h"
 #include "MainMenuState.h"
 #include "PointsService.h"
+#include "PopUpWindow.h"
 #include "Snake.h"
 #include "Sprite.h"
 #include "Text.h"
@@ -18,8 +19,9 @@ namespace Snake
 	AppleService* appleService;
 	PointsService* pointsService;
 	WallCreator* wallCreator;
+	PopUpWindow* popUpWindow;
 
-	bool* isGameOver;
+	bool isGameOver;
 	float* elapsedTime;
 
 	GameplayState::GameplayState() : GameState()
@@ -30,8 +32,9 @@ namespace Snake
 		appleService = new AppleService();
 		pointsService = new PointsService();
 		wallCreator = new WallCreator();
+		popUpWindow = new PopUpWindow(*pointsService);
 
-		isGameOver = new bool(false);
+		isGameOver = false;
 		elapsedTime = new float(0.f);
 	}
 
@@ -43,9 +46,9 @@ namespace Snake
 		delete appleService;
 		delete pointsService;
 		delete wallCreator;
+		delete popUpWindow;
 
 		delete elapsedTime;
-		delete isGameOver;
 	}
 
 	void GameplayState::Draw(sf::RenderWindow& window)
@@ -55,13 +58,20 @@ namespace Snake
 		appleService->Draw(window);
 		wallCreator->Draw(window);
 
-		if (TimeIsPaused())
+		if (isGameOver)
 		{
-			sf::Vector2f* origin = new sf::Vector2f(0.5f, 0.f);
+			popUpWindow->Draw(window);
+		}
+		else
+		{
+			if (TimeIsPaused())
+			{
+				sf::Vector2f* origin = new sf::Vector2f(0.5f, 0.f);
 
-			gameplayTextMenu->Draw(window, *origin, 150.f);
+				gameplayTextMenu->Draw(window, *origin, 150.f);
 
-			delete origin;
+				delete origin;
+			}
 		}
 
 		pointsService->Draw(window);
@@ -69,6 +79,12 @@ namespace Snake
 
 	void GameplayState::HandleWindowEvents(sf::RenderWindow& window, sf::Event& event)
 	{
+		if (isGameOver)
+		{
+			popUpWindow->HandleWindowEvents(window, event);
+			return;
+		}
+
 		bool gameIsPaused = TimeIsPaused();
 
 		if (event.type == sf::Event::KeyPressed)
@@ -115,17 +131,19 @@ namespace Snake
 
 		pointsService->Initialization(resourceData, difficultyService);
 		appleService->Initialization(resourceData, difficultyService);
+		InitializationOfPopUpMenu(resourceData);
 
 		wallCreator->CreateScreenPerimeterWalls(resourceData);
-		appleService->CreateApple();
+		appleService->CreateApple(snake->GetSnakeData().body);
 
 		SetPause(false);
 	}
 
 	void GameplayState::Update(float deltaTime, sf::RenderWindow& window)
 	{
-		if (!isGameOver)
+		if (isGameOver)
 		{
+			return;
 		}
 
 		*elapsedTime += deltaTime;
@@ -142,10 +160,26 @@ namespace Snake
 
 			pointsService->AddPoints();
 
-			appleService->CreateApple();
+			appleService->CreateApple(snake->GetSnakeData().body);
 		}
 
 		*elapsedTime = 0.f;
+
+		if (!isGameOver)
+		{
+			SnakeData& snakeData = snake->GetSnakeData();
+			std::vector<sf::Sprite>& wall = wallCreator->GetWall();
+
+			isGameOver = FullCheckCollisions(wall.begin(), wall.end(), *snakeData.head) ||
+				FullCheckCollisions(snakeData.body.begin(), snakeData.head, *snakeData.head) ||
+				FullCheckCollisions(std::next(snakeData.head), snakeData.body.end(), *snakeData.head);
+
+			if (isGameOver)
+			{
+				pointsService->SortRecords();
+				popUpWindow->UpdatePop();
+			}
+		}
 	}
 
 	void GameplayState::GameplayTextMenuInitialization(ResourceData& resourceData)
@@ -171,6 +205,29 @@ namespace Snake
 		pauseMenu.childrens.push_back(continueGame);
 
 		gameplayTextMenu->Initialization(pauseMenu);
+	}
+
+	void GameplayState::InitializationOfPopUpMenu(ResourceData& resourceData)
+	{
+		MenuItem startGame;
+		SetTextData(startGame.text, "Start game", resourceData.font, 24);
+		startGame.onPressCallback = [this](MenuItem& item)
+			{
+				gameStateMachine->SwitchCurrentStateTo(new GameplayState());
+			};
+
+		MenuItem exitGame;
+		SetTextData(exitGame.text, "Exit to menu", resourceData.font, 24);
+		exitGame.onPressCallback = [this](MenuItem& item)
+			{
+				gameStateMachine->SwitchCurrentStateTo(new MainMenuState());
+			};
+
+		MenuItem mainMenu;
+		SetChildrenData(mainMenu, Orientation::Vertical, Alignment::Middle, 10.f);
+		mainMenu.childrens.push_back(startGame);
+		mainMenu.childrens.push_back(exitGame);
+		popUpWindow->Initialization(mainMenu, resourceData);
 	}
 
 	void GameplayState::InitializationOfTheSnake(ResourceData& resourceData, GameDifficultyService& difficultyService)

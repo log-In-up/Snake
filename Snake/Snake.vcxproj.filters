@@ -64,6 +64,9 @@
     <ClCompile Include="WallCreator.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="PopUpWindow.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -85,5 +88,6 @@
     <ClInclude Include="PointsService.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WallCreator.h" />
+    <ClInclude Include="PopUpWindow.h" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ namespace Snake
 		void Update(float deltaTime, sf::RenderWindow& window) override;
 	private:
 		void GameplayTextMenuInitialization(ResourceData& resourceData);
+		void InitializationOfPopUpMenu(ResourceData& resourceData);
 		void InitializationOfTheSnake(ResourceData& resourceData, GameDifficultyService& difficultyService);
 	};
 }
