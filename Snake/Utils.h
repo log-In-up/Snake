@@ -8,5 +8,5 @@ namespace Snake
 	{
 	};
 
-	void SelectionSort(std::map<std::string, int>& map);
+	void SelectionSort(std::map<std::string, unsigned int>& map);
 }

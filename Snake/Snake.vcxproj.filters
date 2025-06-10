@@ -64,7 +64,25 @@
     <ClCompile Include="WallCreator.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="PopUpWindow.cpp">
+    <ClCompile Include="TableOfRecordsState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PopUpStateMachine.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="NoPopUp.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterNamePopUpState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordTablePopUpState.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AddNamePopUpState.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,6 +106,12 @@
     <ClInclude Include="PointsService.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WallCreator.h" />
-    <ClInclude Include="PopUpWindow.h" />
+    <ClInclude Include="TableOfRecordsState.h" />
+    <ClInclude Include="PopUpState.h" />
+    <ClInclude Include="PopUpStateMachine.h" />
+    <ClInclude Include="NoPopUp.h" />
+    <ClInclude Include="EnterNamePopUpState.h" />
+    <ClInclude Include="RecordTablePopUpState.h" />
+    <ClInclude Include="AddNamePopUpState.h" />
   </ItemGroup>
 </Project>

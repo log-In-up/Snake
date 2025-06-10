@@ -10,7 +10,7 @@ namespace Snake
 	unsigned int pointsPerApple;
 
 	sf::Text* displayingTheNumberOfPoints;
-	std::map<std::string, int>* recordsTable;
+	std::map<std::string, unsigned int>* recordsTable;
 
 	PointsService::PointsService()
 	{
@@ -19,11 +19,11 @@ namespace Snake
 
 		displayingTheNumberOfPoints = new sf::Text();
 
-		recordsTable = new std::map<std::string, int>();
-		recordsTable->insert(std::pair<std::string, int>("Carol", 55));
-		recordsTable->insert(std::pair<std::string, int>("Jane", 30));
-		recordsTable->insert(std::pair<std::string, int>("Alice", 120));
-		recordsTable->insert(std::pair<std::string, int>("Bob", 85));
+		recordsTable = new std::map<std::string, unsigned int>();
+		recordsTable->insert(std::pair<std::string, unsigned int>("Carol", 55));
+		recordsTable->insert(std::pair<std::string, unsigned int>("Jane", 30));
+		recordsTable->insert(std::pair<std::string, unsigned int>("Alice", 120));
+		recordsTable->insert(std::pair<std::string, unsigned int>("Bob", 85));
 	}
 
 	PointsService::~PointsService()
@@ -32,7 +32,7 @@ namespace Snake
 		delete recordsTable;
 	}
 
-	std::map<std::string, int>& PointsService::GetRecordsTable()
+	std::map<std::string, unsigned int>& PointsService::GetRecordsTable()
 	{
 		return *recordsTable;
 	}
@@ -47,6 +47,11 @@ namespace Snake
 		currentPoints += pointsPerApple;
 
 		displayingTheNumberOfPoints->setString(std::to_string(currentPoints));
+	}
+
+	void PointsService::AddRecord(std::string name, unsigned int points)
+	{
+		recordsTable->insert(std::pair<std::string, int>(name, points));
 	}
 
 	void PointsService::Draw(sf::RenderWindow& window)

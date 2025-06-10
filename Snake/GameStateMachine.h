@@ -4,6 +4,7 @@
 
 #include "GameDifficultyService.h"
 #include "GameState.h"
+#include "PointsService.h"
 #include "ResourceLoader.h"
 
 namespace Snake
@@ -14,18 +15,31 @@ namespace Snake
 		ResourceData& resourceData;
 		GameState* currentGameState;
 		GameDifficultyService* difficultyService;
+		PointsService* pointsService;
 	public:
 		GameStateMachine(GameState* gameStartingState, ResourceData& resourceData) : resourceData(resourceData), currentGameState(nullptr)
 		{
 			difficultyService = new GameDifficultyService();
+			pointsService = new PointsService();
 
 			this->SwitchCurrentStateTo(gameStartingState);
 		}
 
 		~GameStateMachine()
 		{
-			delete currentGameState;
 			delete difficultyService;
+			delete pointsService;
+			delete currentGameState;
+		}
+
+		PointsService& GetPointsService()
+		{
+			return *pointsService;
+		}
+
+		ResourceData& GetResourceData()
+		{
+			return resourceData;
 		}
 
 		void Draw(sf::RenderWindow& window);

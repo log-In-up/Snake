@@ -1,9 +1,11 @@
 #include "AppleService.h"
+#include "EnterNamePopUpState.h"
 #include "GameplayState.h"
 #include "GameStateMachine.h"
 #include "MainMenuState.h"
+#include "NoPopUp.h"
 #include "PointsService.h"
-#include "PopUpWindow.h"
+#include "PopUpStateMachine.h"
 #include "Snake.h"
 #include "Sprite.h"
 #include "Text.h"
@@ -17,38 +19,41 @@ namespace Snake
 	SnakeData* snakeData;
 	Snake* snake;
 	AppleService* appleService;
-	PointsService* pointsService;
 	WallCreator* wallCreator;
-	PopUpWindow* popUpWindow;
+	PopUpStateMachine* popUpStateMachine;
+	GameplayData* gameplayData;
 
-	bool isGameOver;
 	float* elapsedTime;
+	float* prePauseTime;
 
-	GameplayState::GameplayState() : GameState()
+	GameplayState::GameplayState(GameStateMachine& gameStateMachine) : GameState()
 	{
+		gameplayData = new GameplayData();
+		gameplayData->isGameOver = false;
+
 		gameplayTextMenu = new TextMenu();
 		snakeData = new SnakeData();
 		snake = new Snake(*snakeData);
 		appleService = new AppleService();
-		pointsService = new PointsService();
 		wallCreator = new WallCreator();
-		popUpWindow = new PopUpWindow(*pointsService);
+		popUpStateMachine = new PopUpStateMachine(gameStateMachine);
 
-		isGameOver = false;
 		elapsedTime = new float(0.f);
+		prePauseTime = new float(GAME_PRE_PAUSE_TIME);
 	}
 
 	GameplayState::~GameplayState()
 	{
+		delete gameplayData;
 		delete gameplayTextMenu;
 		delete snakeData;
 		delete snake;
 		delete appleService;
-		delete pointsService;
 		delete wallCreator;
-		delete popUpWindow;
+		delete popUpStateMachine;
 
 		delete elapsedTime;
+		delete prePauseTime;
 	}
 
 	void GameplayState::Draw(sf::RenderWindow& window)
@@ -57,31 +62,26 @@ namespace Snake
 
 		appleService->Draw(window);
 		wallCreator->Draw(window);
+		popUpStateMachine->Draw(window);
 
-		if (isGameOver)
+		if (!gameplayData->isGameOver && TimeIsPaused())
 		{
-			popUpWindow->Draw(window);
-		}
-		else
-		{
-			if (TimeIsPaused())
-			{
-				sf::Vector2f* origin = new sf::Vector2f(0.5f, 0.f);
+			sf::Vector2f* origin = new sf::Vector2f(0.5f, 0.f);
 
-				gameplayTextMenu->Draw(window, *origin, 150.f);
+			gameplayTextMenu->Draw(window, *origin, 150.f);
 
-				delete origin;
-			}
+			delete origin;
 		}
 
-		pointsService->Draw(window);
+		gameStateMachine->GetPointsService().Draw(window);
 	}
 
 	void GameplayState::HandleWindowEvents(sf::RenderWindow& window, sf::Event& event)
 	{
-		if (isGameOver)
+		popUpStateMachine->HandleWindowEvents(window, event);
+
+		if (gameplayData->isGameOver)
 		{
-			popUpWindow->HandleWindowEvents(window, event);
 			return;
 		}
 
@@ -96,23 +96,7 @@ namespace Snake
 
 			if (!gameIsPaused)
 			{
-				switch (event.key.code)
-				{
-				case sf::Keyboard::W:
-					snakeData->direction = SnakeDirection::Up;
-					break;
-				case sf::Keyboard::A:
-					snakeData->direction = SnakeDirection::Left;
-					break;
-				case sf::Keyboard::S:
-					snakeData->direction = SnakeDirection::Down;
-					break;
-				case sf::Keyboard::D:
-					snakeData->direction = SnakeDirection::Right;
-					break;
-				default:
-					break;
-				}
+				snake->ReadInput(event);
 			}
 		}
 
@@ -124,14 +108,13 @@ namespace Snake
 
 	void GameplayState::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
-		//*elapsedTime = 0.f;
+		popUpStateMachine->SwitchCurrentStateTo(new NoPopUp());
 
 		InitializationOfTheSnake(resourceData, difficultyService);
 		GameplayTextMenuInitialization(resourceData);
 
-		pointsService->Initialization(resourceData, difficultyService);
+		gameStateMachine->GetPointsService().Initialization(resourceData, difficultyService);
 		appleService->Initialization(resourceData, difficultyService);
-		InitializationOfPopUpMenu(resourceData);
 
 		wallCreator->CreateScreenPerimeterWalls(resourceData);
 		appleService->CreateApple(snake->GetSnakeData().body);
@@ -141,7 +124,7 @@ namespace Snake
 
 	void GameplayState::Update(float deltaTime, sf::RenderWindow& window)
 	{
-		if (isGameOver)
+		if (gameplayData->isGameOver || GameIsOnPrePause(deltaTime))
 		{
 			return;
 		}
@@ -158,27 +141,40 @@ namespace Snake
 		{
 			snake->GrowSnake();
 
-			pointsService->AddPoints();
+			gameStateMachine->GetPointsService().AddPoints();
 
 			appleService->CreateApple(snake->GetSnakeData().body);
 		}
 
 		*elapsedTime = 0.f;
 
-		if (!isGameOver)
+		if (!gameplayData->isGameOver)
 		{
 			SnakeData& snakeData = snake->GetSnakeData();
 			std::vector<sf::Sprite>& wall = wallCreator->GetWall();
 
-			isGameOver = FullCheckCollisions(wall.begin(), wall.end(), *snakeData.head) ||
+			gameplayData->isGameOver = FullCheckCollisions(wall.begin(), wall.end(), *snakeData.head) ||
 				FullCheckCollisions(snakeData.body.begin(), snakeData.head, *snakeData.head) ||
 				FullCheckCollisions(std::next(snakeData.head), snakeData.body.end(), *snakeData.head);
 
-			if (isGameOver)
+			if (gameplayData->isGameOver)
 			{
-				pointsService->SortRecords();
-				popUpWindow->UpdatePop();
+				//call game over state
+				popUpStateMachine->SwitchCurrentStateTo(new EnterNamePopUpState());
 			}
+		}
+	}
+
+	bool GameplayState::GameIsOnPrePause(float deltaTime)
+	{
+		if (*prePauseTime > 0.f)
+		{
+			*prePauseTime -= deltaTime;
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 
@@ -205,29 +201,6 @@ namespace Snake
 		pauseMenu.childrens.push_back(continueGame);
 
 		gameplayTextMenu->Initialization(pauseMenu);
-	}
-
-	void GameplayState::InitializationOfPopUpMenu(ResourceData& resourceData)
-	{
-		MenuItem startGame;
-		SetTextData(startGame.text, "Start game", resourceData.font, 24);
-		startGame.onPressCallback = [this](MenuItem& item)
-			{
-				gameStateMachine->SwitchCurrentStateTo(new GameplayState());
-			};
-
-		MenuItem exitGame;
-		SetTextData(exitGame.text, "Exit to menu", resourceData.font, 24);
-		exitGame.onPressCallback = [this](MenuItem& item)
-			{
-				gameStateMachine->SwitchCurrentStateTo(new MainMenuState());
-			};
-
-		MenuItem mainMenu;
-		SetChildrenData(mainMenu, Orientation::Vertical, Alignment::Middle, 10.f);
-		mainMenu.childrens.push_back(startGame);
-		mainMenu.childrens.push_back(exitGame);
-		popUpWindow->Initialization(mainMenu, resourceData);
 	}
 
 	void GameplayState::InitializationOfTheSnake(ResourceData& resourceData, GameDifficultyService& difficultyService)

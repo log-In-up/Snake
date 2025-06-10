@@ -158,8 +158,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddNamePopUpState.cpp" />
     <ClCompile Include="AppleService.cpp" />
     <ClCompile Include="CloseApplication.cpp" />
+    <ClCompile Include="EnterNamePopUpState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameDifficultyService.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -168,11 +170,15 @@
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="Mathematics.cpp" />
+    <ClCompile Include="NoPopUp.cpp" />
     <ClCompile Include="PointsService.cpp" />
-    <ClCompile Include="PopUpWindow.cpp" />
+    <ClCompile Include="PopUpState.cpp" />
+    <ClCompile Include="PopUpStateMachine.cpp" />
+    <ClCompile Include="RecordTablePopUpState.cpp" />
     <ClCompile Include="ResourceLoader.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="TableOfRecordsState.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextMenu.cpp" />
     <ClCompile Include="TimeService.cpp" />
@@ -180,8 +186,10 @@
     <ClCompile Include="WallCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddNamePopUpState.h" />
     <ClInclude Include="AppleService.h" />
     <ClInclude Include="CloseApplication.h" />
+    <ClInclude Include="EnterNamePopUpState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameDifficultyService.h" />
     <ClInclude Include="GameMain.h" />
@@ -190,11 +198,15 @@
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="Mathematics.h" />
+    <ClInclude Include="NoPopUp.h" />
     <ClInclude Include="PointsService.h" />
-    <ClInclude Include="PopUpWindow.h" />
+    <ClInclude Include="PopUpState.h" />
+    <ClInclude Include="PopUpStateMachine.h" />
+    <ClInclude Include="RecordTablePopUpState.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TableOfRecordsState.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextMenu.h" />
     <ClInclude Include="TimeService.h" />

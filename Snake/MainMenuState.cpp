@@ -5,6 +5,7 @@
 #include "GameplayState.h"
 #include "GameStateMachine.h"
 #include "MainMenuState.h"
+#include "TableOfRecordsState.h"
 #include "Text.h"
 
 namespace Snake
@@ -41,7 +42,7 @@ namespace Snake
 		SetTextData(startGame.text, "Start the game", resourceData.font, 24);
 		startGame.onPressCallback = [this](MenuItem& item)
 			{
-				gameStateMachine->SwitchCurrentStateTo(new GameplayState());
+				gameStateMachine->SwitchCurrentStateTo(new GameplayState(*gameStateMachine));
 			};
 
 		std::vector<MenuItem> difficultiesList = GetAListOfDifficulties(resourceData, difficultyService);
@@ -54,7 +55,10 @@ namespace Snake
 
 		MenuItem tableOfRecords;
 		SetTextData(tableOfRecords.text, "Table of records", resourceData.font, 24);
-		SetTextData(tableOfRecords.hintText, "Table of records", resourceData.font, 48, sf::Color::White);
+		tableOfRecords.onPressCallback = [this](MenuItem& item)
+			{
+				gameStateMachine->SwitchCurrentStateTo(new TableOfRecordsState());
+			};
 
 		MenuItem sound;
 		SetTextData(sound.text, "Sound [ ]", resourceData.font, 24);

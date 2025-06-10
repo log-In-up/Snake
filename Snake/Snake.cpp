@@ -196,6 +196,27 @@ namespace Snake
 		SetBodySprite(snakeData, prevHead);
 	}
 
+	void Snake::ReadInput(sf::Event& event)
+	{
+		switch (event.key.code)
+		{
+		case sf::Keyboard::W:
+			snakeData.direction = SnakeDirection::Up;
+			break;
+		case sf::Keyboard::A:
+			snakeData.direction = SnakeDirection::Left;
+			break;
+		case sf::Keyboard::S:
+			snakeData.direction = SnakeDirection::Down;
+			break;
+		case sf::Keyboard::D:
+			snakeData.direction = SnakeDirection::Right;
+			break;
+		default:
+			break;
+		}
+	}
+
 	sf::Vector2f Snake::GetDirectionVector(SnakeDirection direction)
 	{
 		sf::Vector2f result;

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include "GameDifficultyService.h"
 #include "ResourceLoader.h"
@@ -54,6 +55,7 @@ namespace Snake
 		void Initialization(DifficultyData& difficultyData);
 		void LoadSnakeTextures(ResourceData& resourceData);
 		void MoveSnake(float deltaTime);
+		void ReadInput(sf::Event& event);
 	private:
 		sf::Vector2f GetDirectionVector(SnakeDirection direction);
 	};

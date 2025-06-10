@@ -12,7 +12,7 @@ namespace Snake
 		return false;
 	}
 
-	sf::Vector2f GetRandomSpritePositionInRectangle(const sf::Sprite& sprite, const sf::FloatRect& rect)
+	sf::Vector2f GetRandomSpritePositionInRectangle(const sf::Sprite& sprite, const sf::FloatRect& rect, float size)
 	{
 		sf::Vector2f result;
 
@@ -21,6 +21,12 @@ namespace Snake
 
 		result.x = rand() / (float)RAND_MAX * (rect.width - 2 * spriteWidth) + rect.left + spriteWidth;
 		result.y = rand() / (float)RAND_MAX * (rect.height - 2 * spriteHeight) + rect.top + spriteHeight;
+
+		float floorPosition = floor(result.x / size);
+		result.x = floorPosition * size;
+
+		floorPosition = floor(result.y / size);
+		result.y = floorPosition * size;
 
 		return result;
 	}
@@ -37,11 +43,11 @@ namespace Snake
 		SetSpriteSize(sprite, desiredWidth, desiredHeight);
 	}
 
-	void SetSpriteRandomPosition(sf::Sprite& sprite, const sf::FloatRect& rect, const std::list<sf::Sprite>& collection)
+	void SetSpriteRandomPosition(sf::Sprite& sprite, const sf::FloatRect& rect, const std::list<sf::Sprite>& collection, float size)
 	{
 		do
 		{
-			const auto newPosition = GetRandomSpritePositionInRectangle(sprite, rect);
+			const auto newPosition = GetRandomSpritePositionInRectangle(sprite, rect, size);
 			sprite.setPosition(newPosition);
 		} while (FullCheckCollisions(collection.begin(), collection.end(), sprite));
 	}

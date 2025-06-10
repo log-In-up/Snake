@@ -2,7 +2,7 @@
 
 namespace Snake
 {
-	void SelectionSort(std::map<std::string, int>& map)
+	void SelectionSort(std::map<std::string, unsigned int>& map)
 	{
 		for (int i = 0; i < map.size() - 1; ++i)
 		{
@@ -10,8 +10,8 @@ namespace Snake
 
 			for (int j = i + 1; j < map.size(); ++j)
 			{
-				std::pair<const std::string, int>& min_idx_element = *std::next(map.begin(), min_idx);
-				std::pair<const std::string, int>& jth_element = *std::next(map.begin(), j);
+				std::pair<const std::string, unsigned int>& min_idx_element = *std::next(map.begin(), min_idx);
+				std::pair<const std::string, unsigned int>& jth_element = *std::next(map.begin(), j);
 
 				if (jth_element.second > min_idx_element.second)
 				{
@@ -19,10 +19,10 @@ namespace Snake
 				}
 			}
 
-			std::pair<std::string, int> ith_element = *std::next(map.begin(), i);
-			std::pair<std::string, int> min_idx_element = *std::next(map.begin(), min_idx);
+			std::pair<std::string, unsigned int> ith_element = *std::next(map.begin(), i);
+			std::pair<std::string, unsigned int> min_idx_element = *std::next(map.begin(), min_idx);
 
-			std::pair<const std::string, int> temp = _STD move(ith_element);
+			std::pair<const std::string, unsigned int> temp = _STD move(ith_element);
 			ith_element = _STD move(min_idx_element);
 			min_idx_element = _STD move(temp);
 		}

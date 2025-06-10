@@ -24,7 +24,7 @@ namespace Snake
 	void AppleService::CreateApple(const std::list<sf::Sprite>& collection)
 	{
 		sf::FloatRect rect(0.f, 0.f, (float)(SCREEN_WIDTH - WALL_SIZE * 2), (float)(SCREEN_HEIGHT - WALL_SIZE * 2));
-		SetSpriteRandomPosition(apple->sprite, rect, collection);
+		SetSpriteRandomPosition(apple->sprite, rect, collection, APPLE_SIZE);
 	}
 
 	void AppleService::Draw(sf::RenderWindow& window)
@@ -36,7 +36,7 @@ namespace Snake
 	{
 		apple->sprite.setTexture(resourceData.apple);
 
-		SetSpriteRelativeOrigin(apple->sprite, 0.f, 0.5f);
+		SetSpriteRelativeOrigin(apple->sprite, 0.5f, 0.5f);
 		SetSpriteSize(apple->sprite, APPLE_SIZE, APPLE_SIZE);
 	}
 }
