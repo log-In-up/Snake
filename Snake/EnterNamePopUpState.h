@@ -11,7 +11,7 @@ namespace Snake
 	class EnterNamePopUpState : public PopUpState
 	{
 	public:
-		EnterNamePopUpState();
+		EnterNamePopUpState(GameStateMachine& gameStateMachine);
 		~EnterNamePopUpState();
 
 		void Draw(sf::RenderWindow& window) override;

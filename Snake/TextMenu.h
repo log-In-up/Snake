@@ -5,6 +5,8 @@
 #include <SFML/Window/Event.hpp>
 #include <vector>
 
+#include "AudioService.h"
+
 namespace Snake
 {
 	enum class Orientation
@@ -44,7 +46,11 @@ namespace Snake
 	private:
 		MenuItem rootItem;
 		MenuItem* selectedItem = nullptr;
+		AudioService& audioService;
 	public:
+		TextMenu(AudioService& audioService) : audioService(audioService)
+		{
+		}
 		void Draw(sf::RenderWindow& window, sf::Vector2f& origin, float height);
 		void GoBack();
 		void HandleWindowEvents(sf::RenderWindow& window, sf::Event& event);

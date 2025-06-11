@@ -11,7 +11,7 @@ namespace Snake
 	class MainMenuState : public GameState
 	{
 	public:
-		MainMenuState();
+		MainMenuState(GameStateMachine& gameStateMachine);
 		~MainMenuState();
 		void Draw(sf::RenderWindow& window) override;
 		void HandleWindowEvents(sf::RenderWindow& window, sf::Event& event) override;

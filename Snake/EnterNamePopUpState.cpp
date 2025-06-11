@@ -11,9 +11,9 @@ namespace Snake
 {
 	TextMenu* enterNameTextMenu;
 
-	EnterNamePopUpState::EnterNamePopUpState()
+	EnterNamePopUpState::EnterNamePopUpState(GameStateMachine& gameStateMachine)
 	{
-		enterNameTextMenu = new TextMenu();
+		enterNameTextMenu = new TextMenu(gameStateMachine.GetAudioService());
 	}
 
 	EnterNamePopUpState::~EnterNamePopUpState()
@@ -41,7 +41,7 @@ namespace Snake
 		SetTextData(no.text, "No", resourceData.font, 24);
 		no.onPressCallback = [this](MenuItem& item)
 			{
-				popUpStateMachine->SwitchCurrentStateTo(new RecordTablePopUpState());
+				popUpStateMachine->SwitchCurrentStateTo(new RecordTablePopUpState(*gameStateMachine));
 			};
 
 		MenuItem yes;

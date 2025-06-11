@@ -85,6 +85,9 @@
     <ClCompile Include="AddNamePopUpState.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="AudioService.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
@@ -113,5 +116,6 @@
     <ClInclude Include="EnterNamePopUpState.h" />
     <ClInclude Include="RecordTablePopUpState.h" />
     <ClInclude Include="AddNamePopUpState.h" />
+    <ClInclude Include="AudioService.h" />
   </ItemGroup>
 </Project>

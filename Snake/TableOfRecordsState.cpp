@@ -44,7 +44,7 @@ namespace Snake
 		{
 			if (event.key.code == sf::Keyboard::B)
 			{
-				gameStateMachine->SwitchCurrentStateTo(new MainMenuState());
+				gameStateMachine->SwitchCurrentStateTo(new MainMenuState(*gameStateMachine));
 			}
 		}
 	}

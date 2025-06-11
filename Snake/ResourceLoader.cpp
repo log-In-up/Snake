@@ -8,12 +8,12 @@ namespace Snake
 	{
 		LoadFont(FONT, resourceData.font);
 
-		LoadSound(APPLE_EAT, resourceData.eatApple, resourceData.soundBuffer);
-		LoadSound(BACKGROUND_MUSIC, resourceData.background, resourceData.soundBuffer);
-		LoadSound(DEATH, resourceData.death, resourceData.soundBuffer);
-		LoadSound(LOSE, resourceData.lose, resourceData.soundBuffer);
-		LoadSound(MENU, resourceData.menu, resourceData.soundBuffer);
-		LoadSound(SNAKE_HIT, resourceData.snakeHit, resourceData.soundBuffer);
+		LoadSound(BACKGROUND_MUSIC, resourceData.background, resourceData.backgroundBuffer);
+		LoadSound(DEATH, resourceData.death, resourceData.deathBuffer);
+		LoadSound(LOSE, resourceData.lose, resourceData.loseBuffer);
+		LoadSound(MENU, resourceData.menu, resourceData.menuBuffer);
+		LoadSound(SNAKE_HIT, resourceData.snakeHit, resourceData.snakeHitBuffer);
+		LoadSound(START_SESSION, resourceData.startSession, resourceData.startSessionBuffer);
 
 		LoadTexture(APPLE, resourceData.apple);
 		LoadTexture(ROCK, resourceData.rock);

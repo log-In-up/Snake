@@ -12,9 +12,9 @@ namespace Snake
 {
 	TextMenu* mainTextMenu;
 
-	MainMenuState::MainMenuState() : GameState()
+	MainMenuState::MainMenuState(GameStateMachine& gameStateMachine) : GameState()
 	{
-		mainTextMenu = new TextMenu();
+		mainTextMenu = new TextMenu(gameStateMachine.GetAudioService());
 	}
 
 	MainMenuState::~MainMenuState()
@@ -60,16 +60,34 @@ namespace Snake
 				gameStateMachine->SwitchCurrentStateTo(new TableOfRecordsState());
 			};
 
+		std::string soundValue = gameStateMachine->GetAudioService().IsEnabled(SoundSettings::Sound) ?
+			"x" : " ";
+
 		MenuItem sound;
-		SetTextData(sound.text, "Sound [ ]", resourceData.font, 24);
-		sound.onPressCallback = [](MenuItem& item)
+		SetTextData(sound.text, "Sound [" + soundValue + "]", resourceData.font, 24);
+		sound.onPressCallback = [this](MenuItem& item)
 			{
+				gameStateMachine->GetAudioService().SetSettings(SoundSettings::Sound);
+
+				std::string soundValue = gameStateMachine->GetAudioService().IsEnabled(SoundSettings::Sound) ?
+					"x" : " ";
+
+				item.text.setString("Sound [" + soundValue + "]");
 			};
 
+		std::string musicValue = gameStateMachine->GetAudioService().IsEnabled(SoundSettings::Music) ?
+			"x" : " ";
+
 		MenuItem music;
-		SetTextData(music.text, "Music [ ]", resourceData.font, 24);
-		music.onPressCallback = [](MenuItem& item)
+		SetTextData(music.text, "Music [" + musicValue + "]", resourceData.font, 24);
+		music.onPressCallback = [this](MenuItem& item)
 			{
+				gameStateMachine->GetAudioService().SetSettings(SoundSettings::Music);
+
+				std::string musicValue = gameStateMachine->GetAudioService().IsEnabled(SoundSettings::Music) ?
+					"x" : " ";
+
+				item.text.setString("Music [" + musicValue + "]");
 			};
 
 		MenuItem settings;

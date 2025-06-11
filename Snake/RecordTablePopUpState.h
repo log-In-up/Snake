@@ -11,7 +11,7 @@ namespace Snake
 	class RecordTablePopUpState : public PopUpState
 	{
 	public:
-		RecordTablePopUpState();
+		RecordTablePopUpState(GameStateMachine& gameStateMachine);
 		~RecordTablePopUpState();
 
 		void Draw(sf::RenderWindow& window) override;

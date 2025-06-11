@@ -23,7 +23,7 @@ namespace Snake
 
 	void AppleService::CreateApple(const std::list<sf::Sprite>& collection)
 	{
-		sf::FloatRect rect(0.f, 0.f, (float)(SCREEN_WIDTH - WALL_SIZE * 2), (float)(SCREEN_HEIGHT - WALL_SIZE * 2));
+		sf::FloatRect rect(WALL_SIZE, WALL_SIZE, (float)(SCREEN_WIDTH - WALL_SIZE), (float)(SCREEN_HEIGHT - WALL_SIZE));
 		SetSpriteRandomPosition(apple->sprite, rect, collection, APPLE_SIZE);
 	}
 

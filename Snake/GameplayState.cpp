@@ -31,7 +31,7 @@ namespace Snake
 		gameplayData = new GameplayData();
 		gameplayData->isGameOver = false;
 
-		gameplayTextMenu = new TextMenu();
+		gameplayTextMenu = new TextMenu(gameStateMachine.GetAudioService());
 		snakeData = new SnakeData();
 		snake = new Snake(*snakeData);
 		appleService = new AppleService();
@@ -119,6 +119,9 @@ namespace Snake
 		wallCreator->CreateScreenPerimeterWalls(resourceData);
 		appleService->CreateApple(snake->GetSnakeData().body);
 
+		gameStateMachine->GetAudioService().PlayStartSession();
+		gameStateMachine->GetAudioService().SetPlayBackground(true);
+
 		SetPause(false);
 	}
 
@@ -139,6 +142,8 @@ namespace Snake
 
 		if (CheckSpriteIntersection(*snake->GetSnakeData().head, appleService->GetAppleData().sprite))
 		{
+			gameStateMachine->GetAudioService().PlaySnakeHit();
+
 			snake->GrowSnake();
 
 			gameStateMachine->GetPointsService().AddPoints();
@@ -159,8 +164,10 @@ namespace Snake
 
 			if (gameplayData->isGameOver)
 			{
-				//call game over state
-				popUpStateMachine->SwitchCurrentStateTo(new EnterNamePopUpState());
+				gameStateMachine->GetAudioService().SetPlayBackground(false);
+				gameStateMachine->GetAudioService().PlayLose();
+
+				popUpStateMachine->SwitchCurrentStateTo(new EnterNamePopUpState(*gameStateMachine));
 			}
 		}
 	}
@@ -184,7 +191,8 @@ namespace Snake
 		SetTextData(exitTheGame.text, "Exit the game", resourceData.font, 24);
 		exitTheGame.onPressCallback = [this](MenuItem& item)
 			{
-				gameStateMachine->SwitchCurrentStateTo(new MainMenuState());
+				gameStateMachine->GetAudioService().SetPlayBackground(false);
+				gameStateMachine->SwitchCurrentStateTo(new MainMenuState(*gameStateMachine));
 			};
 
 		MenuItem continueGame;

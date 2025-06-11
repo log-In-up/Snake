@@ -62,6 +62,7 @@ namespace Snake
 
 	void PointsService::Initialization(ResourceData& resourceData, GameDifficultyService& difficultyService)
 	{
+		currentPoints = 0;
 		pointsPerApple = difficultyService.GetCurrentDifficultyData().pointsPerEatenApple;
 
 		SetTextData(*displayingTheNumberOfPoints, std::to_string(currentPoints), resourceData.font, 16, sf::Color::White);

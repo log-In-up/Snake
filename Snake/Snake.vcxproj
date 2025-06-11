@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AddNamePopUpState.cpp" />
     <ClCompile Include="AppleService.cpp" />
+    <ClCompile Include="AudioService.cpp" />
     <ClCompile Include="CloseApplication.cpp" />
     <ClCompile Include="EnterNamePopUpState.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -188,6 +189,7 @@
   <ItemGroup>
     <ClInclude Include="AddNamePopUpState.h" />
     <ClInclude Include="AppleService.h" />
+    <ClInclude Include="AudioService.h" />
     <ClInclude Include="CloseApplication.h" />
     <ClInclude Include="EnterNamePopUpState.h" />
     <ClInclude Include="Game.h" />

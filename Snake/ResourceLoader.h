@@ -22,7 +22,7 @@ namespace Snake
 
 	const std::string FONT = "Roboto-Bold.ttf";
 
-	const std::string APPLE_EAT = "Apple_Eat.wav",
+	const std::string START_SESSION = "Start_Session.wav",
 		BACKGROUND_MUSIC = "Clint_Hammer_Background_Music.wav",
 		DEATH = "Death.wav",
 		LOSE = "Maodin204_Lose.wav",
@@ -41,13 +41,20 @@ namespace Snake
 		sf::Texture snakeTail;
 
 		// Audio objects
-		sf::SoundBuffer soundBuffer;
+		sf::SoundBuffer eatAppleBuffer;
 		sf::Sound eatApple;
+		sf::SoundBuffer backgroundBuffer;
 		sf::Sound background;
+		sf::SoundBuffer deathBuffer;
 		sf::Sound death;
+		sf::SoundBuffer loseBuffer;
 		sf::Sound lose;
+		sf::SoundBuffer menuBuffer;
 		sf::Sound menu;
+		sf::SoundBuffer snakeHitBuffer;
 		sf::Sound snakeHit;
+		sf::SoundBuffer startSessionBuffer;
+		sf::Sound startSession;
 
 		// Fonts
 		sf::Font font;

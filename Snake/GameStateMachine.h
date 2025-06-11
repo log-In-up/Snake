@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "AudioService.h"
 #include "GameDifficultyService.h"
 #include "GameState.h"
 #include "PointsService.h"
@@ -12,21 +13,22 @@ namespace Snake
 	class GameStateMachine
 	{
 	private:
+		AudioService* audioService;
 		ResourceData& resourceData;
 		GameState* currentGameState;
 		GameDifficultyService* difficultyService;
 		PointsService* pointsService;
 	public:
-		GameStateMachine(GameState* gameStartingState, ResourceData& resourceData) : resourceData(resourceData), currentGameState(nullptr)
+		GameStateMachine(ResourceData& resourceData) : resourceData(resourceData), currentGameState(nullptr)
 		{
+			audioService = new AudioService(resourceData);
 			difficultyService = new GameDifficultyService();
 			pointsService = new PointsService();
-
-			this->SwitchCurrentStateTo(gameStartingState);
 		}
 
 		~GameStateMachine()
 		{
+			delete audioService;
 			delete difficultyService;
 			delete pointsService;
 			delete currentGameState;
@@ -40,6 +42,11 @@ namespace Snake
 		ResourceData& GetResourceData()
 		{
 			return resourceData;
+		}
+
+		AudioService& GetAudioService()
+		{
+			return *audioService;
 		}
 
 		void Draw(sf::RenderWindow& window);

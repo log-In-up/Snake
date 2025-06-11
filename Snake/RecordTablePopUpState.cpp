@@ -19,9 +19,9 @@ namespace Snake
 	sf::Text* pointsReceivedByThePlayer;
 	std::vector<sf::Text*>* popUpTableTexts;
 
-	RecordTablePopUpState::RecordTablePopUpState()
+	RecordTablePopUpState::RecordTablePopUpState(GameStateMachine& gameStateMachine)
 	{
-		popUpMenu = new TextMenu();
+		popUpMenu = new TextMenu(gameStateMachine.GetAudioService());
 		header = new sf::Text();
 		pointsReceivedByThePlayer = new sf::Text();
 
@@ -77,14 +77,14 @@ namespace Snake
 		SetTextData(startGame.text, "Start game", resourceData.font, 24);
 		startGame.onPressCallback = [this](MenuItem& item)
 			{
-				gameStateMachine->SwitchCurrentStateTo(new GameplayState(*this->gameStateMachine));
+				gameStateMachine->SwitchCurrentStateTo(new GameplayState(*gameStateMachine));
 			};
 
 		MenuItem exitGame;
 		SetTextData(exitGame.text, "Exit to menu", resourceData.font, 24);
 		exitGame.onPressCallback = [this](MenuItem& item)
 			{
-				gameStateMachine->SwitchCurrentStateTo(new MainMenuState());
+				gameStateMachine->SwitchCurrentStateTo(new MainMenuState(*gameStateMachine));
 			};
 
 		MenuItem mainMenu;

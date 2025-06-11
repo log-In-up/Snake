@@ -14,7 +14,7 @@ namespace Snake
 	Game::Game()
 	{
 		resourceData = new ResourceData();
-		gameStateMachine = new GameStateMachine(new MainMenuState(), *resourceData);
+		gameStateMachine = new GameStateMachine(*resourceData);
 		resourceLoader = new ResourceLoader();
 		timeService = new TimeService();
 	}
@@ -47,10 +47,14 @@ namespace Snake
 
 	void Game::Initialization()
 	{
+		unsigned int seed = (unsigned int)time(nullptr);
+		srand(seed);
+
 		resourceLoader->LoadResources(*resourceData);
 
 		timeService->Initialization();
 
+		gameStateMachine->SwitchCurrentStateTo(new MainMenuState(*gameStateMachine));
 		gameStateMachine->Initialization();
 	}
 

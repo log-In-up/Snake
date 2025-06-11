@@ -140,6 +140,7 @@ namespace Snake
 		if (selectedItem)
 		{
 			selectedItem->text.setFillColor(selectedItem->selectedColor);
+			audioService.PlaySelectMenuItem();
 		}
 	}
 

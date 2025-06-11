@@ -56,7 +56,7 @@ namespace Snake
 			if (event.key.code == sf::Keyboard::Enter && !inputString.empty())
 			{
 				gameStateMachine->GetPointsService().AddRecord(inputString, gameStateMachine->GetPointsService().GetPoints());
-				popUpStateMachine->SwitchCurrentStateTo(new RecordTablePopUpState());
+				popUpStateMachine->SwitchCurrentStateTo(new RecordTablePopUpState(*gameStateMachine));
 			}
 		}
 
